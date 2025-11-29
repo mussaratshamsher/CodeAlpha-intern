@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore stunning nature photography including landscapes, mountains, waterfalls, deserts, and ocean views. Browse our curated collection of high-quality images.">
+    <meta name="keywords" content="nature photography, landscape images, mountain photos, waterfall pictures, desert images, ocean gallery">
+    <meta name="author" content="PhotoStream">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="PhotoStream - Beautiful Nature Photography">
+    <meta property="og:description" content="Explore stunning nature photography including landscapes, mountains, waterfalls, deserts, and ocean views.">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#007bff">
+    <link rel="canonical" href="https://yourwebsite.com/gallery">
+    <title>PhotoStream - Nature Photography Gallery | Landscape & Mountain Images</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>PhotoStream - Nature Photography Gallery</h1>
+            <p>Discover a curated collection of stunning nature photography featuring landscapes, mountains, waterfalls, deserts, and ocean views.</p>
+        </header>
+
+        <div class="filter-buttons">
+            <button class="filter-button active" data-filter="all">All</button>
+            <button class="filter-button" data-filter="landscape">Landscape</button>
+            <button class="filter-button" data-filter="mountains">Mountains</button>
+            <button class="filter-button" data-filter="waterfall">Waterfall</button>
+            <button class="filter-button" data-filter="desert">Desert</button>
+            <button class="filter-button" data-filter="ocean">Ocean</button>
+        </div>
+
+        <main class="image-gallery" role="main" aria-label="Image gallery">
+            <!-- Images will be injected here by JavaScript -->
+        </main>
+    </div>
+
+    <div id="lightbox" class="lightbox" role="dialog" aria-label="Image lightbox viewer">
+        <button class="close-button" aria-label="Close lightbox">&times;</button>
+        <img class="lightbox-content" id="lightbox-image" alt="Lightbox image">
+        <button class="prev-button" aria-label="Previous image">&#10094;</button>
+        <button class="next-button" aria-label="Next image">&#10095;</button>
+    </div>
+
+    <script src="js/script.js" defer></script>
+</body>
+</html>

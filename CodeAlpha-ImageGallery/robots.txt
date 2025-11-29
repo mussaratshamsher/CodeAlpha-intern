@@ -1,0 +1,13 @@
+# PhotoStream Gallery robots.txt
+# Allow all crawlers to index the site
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /.env
+Disallow: /.git/
+
+# Specify sitemap
+Sitemap: https://yourwebsite.com/sitemap.xml
+
+# Crawl delay to be respectful
+Crawl-delay: 1
