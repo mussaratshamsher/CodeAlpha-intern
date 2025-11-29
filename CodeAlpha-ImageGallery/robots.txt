@@ -7,7 +7,7 @@ Disallow: /.env
 Disallow: /.git/
 
 # Specify sitemap
-Sitemap: https://yourwebsite.com/sitemap.xml
+Sitemap: https://photogallery-indol.vercel.app/sitemap.xml
 
 # Crawl delay to be respectful
 Crawl-delay: 1

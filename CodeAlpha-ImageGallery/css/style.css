@@ -23,6 +23,39 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* Custom Scrollbar Styling */
+/* Webkit browsers (Chrome, Safari, Edge) */
+body::-webkit-scrollbar {
+    width: 12px;
+}
+
+body::-webkit-scrollbar-track {
+    background: var(--light-color);
+    border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+    border: 2px solid var(--light-color);
+    transition: background 0.3s ease;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background: #0056b3;
+    box-shadow: 0 0 6px rgba(0, 123, 255, 0.4);
+}
+
+body::-webkit-scrollbar-thumb:active {
+    background: #003d82;
+}
+
+/* Firefox scrollbar */
+body {
+    scrollbar-color: var(--primary-color) var(--light-color);
+    scrollbar-width: thin;
+}
+
 .container {
     max-width: 1300px;
     margin: auto;
@@ -194,6 +227,26 @@ header p {
         scroll-behavior: smooth;
         padding: 0 0.5rem;
         -webkit-overflow-scrolling: touch;
+    }
+
+    /* Custom scrollbar for filter buttons */
+    .filter-buttons::-webkit-scrollbar {
+        height: 6px;
+    }
+
+    .filter-buttons::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: 10px;
+    }
+
+    .filter-buttons::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+        border-radius: 10px;
+        border: 1px solid var(--light-color);
+    }
+
+    .filter-buttons::-webkit-scrollbar-thumb:hover {
+        background: #0056b3;
     }
 
     .filter-button {
@@ -541,3 +594,4 @@ header p {
         height: 150px;
     }
 }
+
