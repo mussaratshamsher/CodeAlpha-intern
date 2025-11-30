@@ -7,6 +7,10 @@
     --grey-color: #e0e0e0;
     --white-color: #fff;
     --shadow: 0 10px 20px rgba(0,0,0,0.1);
+    /* Gradient color stops for animated light theme */
+    --grad-1: #ffffff; /* soft white */
+    --grad-2: #f3f8ff; /* pale blue */
+    --grad-3: #eef9f1; /* pale green hint */
 }
 
 * {
@@ -17,10 +21,22 @@
 
 body {
     font-family: 'Montserrat', sans-serif;
-    background: var(--light-color);
     color: var(--dark-color);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
+    /* Animated light gradient background (subtle, pleasant) */
+    background: linear-gradient(120deg, var(--grad-1) 0%, var(--grad-2) 50%, var(--grad-3) 100%);
+    background-size: 300% 300%;
+    animation: bgShift 12s ease-in-out infinite;
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    body {
+        animation: none;
+        background: linear-gradient(120deg, var(--grad-1), var(--grad-2));
+    }
 }
 
 /* Custom Scrollbar Styling */
@@ -555,6 +571,28 @@ header p {
 @keyframes scaleIn {
     from { transform: scale(0.8); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
+}
+
+/* Background color-shift animation for body gradient */
+@keyframes bgShift {
+    0% {
+        background-position: 0% 50%;
+        --grad-1: #ffffff;
+        --grad-2: #f3f8ff;
+        --grad-3: #eef9f1;
+    }
+    50% {
+        background-position: 100% 50%;
+        --grad-1: #fffef6;
+        --grad-2: #f7f3ff;
+        --grad-3: #f0fbff;
+    }
+    100% {
+        background-position: 0% 50%;
+        --grad-1: #ffffff;
+        --grad-2: #f3f8ff;
+        --grad-3: #eef9f1;
+    }
 }
 
 /* Tablet optimizations (768px and below) */

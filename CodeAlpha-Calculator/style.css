@@ -1,0 +1,245 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #1e1e1e;
+    overflow: hidden;
+}
+
+/* ============================= */
+/* GLASSMORPHISM CALCULATOR */
+/* ============================= */
+
+.calculator {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 320px;
+    border-radius: 20px;
+
+    background: rgba(43, 43, 43, 0.6);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    box-shadow:
+        0 0 25px rgba(122, 92, 255, 0.2),
+        0 8px 32px rgba(0, 0, 0, 0.35),
+        inset 0 0 0.8px rgba(255, 255, 255, 0.2);
+
+    overflow: hidden;
+    z-index: 2;
+}
+
+/* ============================= */
+/* DISPLAY */
+/* ============================= */
+
+.display {
+    padding: 20px;
+    text-align: right;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.display input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: #fff;
+    font-size: 3em;
+    text-align: right;
+    padding-right: 10px;
+    outline: none;
+}
+
+/* ============================= */
+/* BUTTON GRID */
+/* ============================= */
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 2px;
+}
+
+/* NORMAL BUTTON */
+.buttons button {
+    padding: 20px;
+    background: rgba(60, 60, 60, 0.85);
+    border: none;
+    color: #fff;
+    font-size: 1.5em;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+
+    transition: all 0.25s ease-in-out;
+}
+
+/* GLOW EFFECT */
+.buttons button::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(
+        45deg,
+        #00f5a0,#7bd0fa,
+        #7a5cff,
+        #ff5ccf
+    );
+    opacity: 0;
+    transition: 0.4s;
+    z-index: -1;
+    filter: blur(12px);
+}
+
+.buttons button:hover::before {
+    opacity: 1;
+}
+
+.buttons button:hover {
+    transform: translateY(-2px) scale(1.02);
+    background: rgba(90, 90, 90, 0.95);
+}
+
+.buttons button:active {
+    transform: scale(0.95);
+}
+
+/* ============================= */
+/* OPERATORS & EQUALS */
+/* ============================= */
+
+.operator,
+.equals {
+    background: rgba(255, 111, 97, 0.85);
+    font-weight: bold;
+}
+
+.operator:hover,
+.equals:hover {
+    background: #ff6f61;
+    box-shadow: 
+        0 0 15px #ff6f61,
+}
+
+.operator:active,
+.equals:active {
+    background: #ff9a8f;
+}
+
+/* ============================= */
+/* LEFT & RIGHT DECOR TEXT */
+/* ============================= */
+
+.bg-decor-left,
+.bg-decor-right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+    font-size: 4.6rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 0;
+
+    opacity: 0.22;
+
+    background-image: linear-gradient(
+        90deg,
+        #00f5a0,
+        #00c2ff,
+        #7a5cff,
+        #ff5ccf
+    );
+    background-size: 400% 400%;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+
+    text-shadow:
+        0 0 12px rgba(0, 245, 160, 0.35),
+        0 0 22px rgba(0, 194, 255, 0.25),
+        0 0 32px rgba(122, 92, 255, 0.2);
+
+    animation: 
+        decorShift 16s ease infinite, 
+        decorPulse 6s ease-in-out infinite,
+        sideFloat 8s ease-in-out infinite;
+}
+
+.bg-decor-left { 
+    left: 6%; 
+    font-size: 4.4rem;
+}
+
+.bg-decor-right { 
+    right: 6%;
+    font-size: 4.8rem;
+}
+
+/* ============================= */
+/* ANIMATIONS */
+/* ============================= */
+
+@keyframes decorShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes decorPulse {
+    0%   { opacity: 0.15; }
+    50%  { opacity: 0.25; }
+    100% { opacity: 0.15; }
+}
+
+@keyframes sideFloat {
+    0%   { transform: translateY(-50%) rotate(-90deg) translateY(0); }
+    50%  { transform: translateY(-50%) rotate(-90deg) translateY(-10px); }
+    100% { transform: translateY(-50%) rotate(-90deg) translateY(0); }
+}
+
+/* ============================= */
+/* RESPONSIVENESS */
+/* ============================= */
+
+@media (max-width: 900px) {
+    .bg-decor-left,
+    .bg-decor-right {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .calculator {
+        width: 280px;
+    }
+}
+
+/* ============================= */
+/* REDUCE MOTION SUPPORT */
+/* ============================= */
+
+@media (prefers-reduced-motion: reduce) {
+    .bg-decor-left,
+    .bg-decor-right {
+        animation: none;
+    }
+
+    .buttons button {
+        transition: none;
+    }
+}
