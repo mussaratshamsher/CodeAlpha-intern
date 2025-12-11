@@ -10,6 +10,12 @@ This is a simple music player built with HTML, CSS, and JavaScript. It allows yo
 - Playlist of all available tracks
 - Autoplay to the next song when the current one ends
 
+## Technologies Used
+
+- HTML
+- CSS
+- JavaScript
+
 ## How to Use
 
 1. Clone the repository or download the files.
@@ -26,3 +32,7 @@ This is a simple music player built with HTML, CSS, and JavaScript. It allows yo
 ## Credits
 
 This project was created as part of the CodeAlpha internship program.
+
+## License
+
+This project is licensed under the MIT License.
