@@ -19,8 +19,9 @@ This is a simple music player built with HTML, CSS, and JavaScript. It allows yo
 ## How to Use
 
 1. Clone the repository or download the files.
-2. Open the `index.html` file in your web browser.
-3. The music player will be displayed, and you can start playing music.
+2. Place your `.mp3` music files inside the `music/` directory. Ensure the filenames match the ones listed in the `songs` array in `script.js` or update the `songs` array accordingly.
+3. Open the `index.html` file in your web browser.
+4. The music player will be displayed, and you can start playing music.
 
 ## Project Structure
 
