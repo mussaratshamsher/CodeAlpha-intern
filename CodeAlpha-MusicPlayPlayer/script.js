@@ -51,23 +51,14 @@ function loadSong(songIndex) {
 
 function playSong() {
     audio.play();
-    const playBtnIcon = playBtn.querySelector('i');
-    playBtnIcon.classList.remove('fa-play');
-    playBtnIcon.classList.add('fa-pause');
 }
 
 function pauseSong() {
     audio.pause();
-    const playBtnIcon = playBtn.querySelector('i');
-    playBtnIcon.classList.remove('fa-pause');
-    playBtnIcon.classList.add('fa-play');
 }
 
 function updateProgressBar() {
-    const {
-        currentTime,
-        duration
-    } = audio;
+    const { currentTime, duration } = audio;
     const progressPercent = (currentTime / duration) * 100;
     progressBar.value = progressPercent;
 
@@ -78,9 +69,8 @@ function updateProgressBar() {
     };
 
     if (duration) {
-        const durationSpans = durationEl.querySelectorAll('span');
-        durationSpans[0].textContent = formatTime(currentTime);
-        durationSpans[1].textContent = formatTime(duration);
+        // After reverting index.html, durationEl is now a span
+        durationEl.textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
     }
 }
 
@@ -134,15 +124,12 @@ function updatePlaylist() {
 // Event Listeners
 playBtn.addEventListener('click', () => {
     const isPlaying = audio.paused;
-    const playBtnIcon = playBtn.querySelector('i');
     if (isPlaying) {
         playSong();
-        playBtnIcon.classList.remove('fa-play');
-        playBtnIcon.classList.add('fa-pause');
+        playBtn.textContent = 'Pause';
     } else {
         pauseSong();
-        playBtnIcon.classList.remove('fa-pause');
-        playBtnIcon.classList.add('fa-play');
+        playBtn.textContent = 'Play';
     }
 });
 
