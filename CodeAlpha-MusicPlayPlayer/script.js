@@ -47,14 +47,25 @@ function loadSong(songIndex) {
     songTitle.textContent = songName;
     songArtist.textContent = 'Unknown Artist'; // You can modify this if you have artist info
     audio.load();
+    console.log(`Loading song: ${songs[songIndex]}`);
 }
 
 function playSong() {
-    audio.play();
+    try {
+        audio.play();
+        playBtn.textContent = 'Pause';
+        console.log('Attempting to play audio.');
+    } catch (error) {
+        console.error('Error attempting to play audio:', error);
+        playBtn.textContent = 'Play';
+        alert('Autoplay blocked or audio failed to load. Please click play manually.');
+    }
 }
 
 function pauseSong() {
     audio.pause();
+    playBtn.textContent = 'Play';
+    console.log('Audio paused.');
 }
 
 function updateProgressBar() {
