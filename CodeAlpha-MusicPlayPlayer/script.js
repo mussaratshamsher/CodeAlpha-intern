@@ -1,157 +1,109 @@
-const songTitle = document.getElementById('song-title');
-const songArtist = document.getElementById('song-artist');
-const prevBtn = document.getElementById('prev-btn');
-const playBtn = document.getElementById('play-btn');
-const nextBtn = document.getElementById('next-btn');
-const progressBar = document.getElementById('progress-bar');
-const durationEl = document.getElementById('duration');
-const volumeControl = document.getElementById('volume-control');
-const playlistEl = document.getElementById('playlist');
-
-const audio = new Audio();
-let currentSong = 0;
+document.addEventListener("DOMContentLoaded", function () {
 
 const songs = [
-    'music/track 1 (1).mp3',
-    'music/track 1 (2).mp3',
-    'music/track 1 (3).mp3',
-    'music/track 1 (4).mp3',
-    'music/track 1 (5).mp3',
-    'music/track 1 (6).mp3',
-    'music/track 1 (7).mp3',
-    'music/track 1 (8).mp3',
-    'music/track 1 (9).mp3',
-    'music/track 1 (10).mp3',
-    'music/track 1 (11).mp3',
-    'music/track 1 (12).mp3',
-    'music/track 1 (13).mp3',
-    'music/track 1 (14).mp3',
-    'music/track 1 (15).mp3',
-    'music/track 1 (16).mp3',
-    'music/track 1 (17).mp3',
-    'music/track 1 (18).mp3',
-    'music/track 1 (19).mp3',
-    'music/track 1 (20).mp3',
-    'music/track 1 (21).mp3',
-    'music/track 1 (22).mp3',
-    'music/track 1 (23).mp3',
-    'music/track 1 (24).mp3',
-    'music/track 1 (25).mp3',
-    'music/track 1 (26).mp3',
-    'music/track 1 (27).mp3'
+'music/track1.mp3',
+'music/track2.mp3',
+'music/track3.mp3',
+'music/track4.mp3',
+'music/track5.mp3',
+'music/track6.mp3',
+'music/track7.mp3',
+'music/track8.mp3',
+'music/track9.mp3',
+'music/track10.mp3',
 ];
 
-function loadSong(songIndex) {
-    audio.src = songs[songIndex];
-    const songName = songs[songIndex].split('/').pop().replace('.mp3', '');
-    songTitle.textContent = songName;
-    songArtist.textContent = 'Unknown Artist'; // You can modify this if you have artist info
-    audio.load();
-    console.log(`Loading song: ${songs[songIndex]}`);
+const audio = document.getElementById('audio');
+const playBtn = document.getElementById('playBtn');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const titleEl = document.getElementById('song-title');
+const artistEl = document.getElementById('song-artist');
+const playlistEl = document.getElementById('playlist');
+const progressBar = document.getElementById('progressBar');
+const progress = document.getElementById('progress');
+const volumeEl = document.getElementById('volume');
+const muteBtn = document.getElementById('muteBtn');
+const currentTimeEl = document.getElementById('currentTime');
+const totalTimeEl = document.getElementById('totalTime');
+const autoplayToggle = document.getElementById('autoplayToggle');
+
+let index = 0;
+let isPlaying = false;
+
+function buildPlaylist(){
+playlistEl.innerHTML='';
+songs.forEach((s,i)=>{
+let div=document.createElement('div');
+div.className='track'; 
+div.dataset.index=i;
+div.textContent=`Track ${i+1}`;
+div.onclick=()=>{ loadTrack(i); playAudio(); };
+playlistEl.appendChild(div);
+});
 }
 
-function playSong() {
-    try {
-        audio.play();
-        playBtn.textContent = 'Pause';
-        console.log('Attempting to play audio.');
-    } catch (error) {
-        console.error('Error attempting to play audio:', error);
-        playBtn.textContent = 'Play';
-        alert('Autoplay blocked or audio failed to load. Please click play manually.');
-    }
+function highlight(){ 
+document.querySelectorAll('.track').forEach(el=>el.classList.remove('active')); 
+document.querySelector(`.track[data-index="${index}"]`)?.classList.add('active'); 
 }
 
-function pauseSong() {
-    audio.pause();
-    playBtn.textContent = 'Play';
-    console.log('Audio paused.');
+function loadTrack(i){ 
+index=i; 
+audio.src=songs[index]; 
+titleEl.textContent=`Track ${index+1}`; 
+artistEl.textContent='Unknown Artist'; 
+highlight(); 
+}
+// Add debugging listeners
+audio.onplay = () => console.log("Audio started playing");
+audio.onerror = () => console.log("Audio failed to load", audio.src);
+
+// Optional: log current track path for debugging
+console.log("Audio element:", audio);
+console.log("Current song path:", songs[index]);
+
+function playAudio(){ 
+audio.play(); 
+isPlaying=true; 
+playBtn.textContent='⏸'; 
 }
 
-function updateProgressBar() {
-    const { currentTime, duration } = audio;
-    const progressPercent = (currentTime / duration) * 100;
-    progressBar.value = progressPercent;
-
-    const formatTime = (time) => {
-        const minutes = Math.floor(time / 60);
-        const seconds = Math.floor(time % 60).toString().padStart(2, '0');
-        return `${minutes}:${seconds}`;
-    };
-
-    if (duration) {
-        // After reverting index.html, durationEl is now a span
-        durationEl.textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
-    }
+function pauseAudio(){ 
+audio.pause(); 
+isPlaying=false; 
+playBtn.textContent='▶'; 
 }
 
-function setProgress() {
-    audio.currentTime = (progressBar.value / 100) * audio.duration;
-}
+playBtn.onclick=()=>{ isPlaying ? pauseAudio() : playAudio(); };
+prevBtn.onclick=()=>{ index=(index-1+songs.length)%songs.length; loadTrack(index); playAudio(); };
+nextBtn.onclick=()=>{ index=(index+1)%songs.length; loadTrack(index); playAudio(); };
 
-function prevSong() {
-    currentSong = (currentSong - 1 + songs.length) % songs.length;
-    loadSong(currentSong);
-    playSong();
-    updatePlaylist();
-}
-
-function nextSong() {
-    currentSong = (currentSong + 1) % songs.length;
-    loadSong(currentSong);
-    playSong();
-    updatePlaylist();
-}
-
-function setVolume() {
-    audio.volume = volumeControl.value;
-}
-
-function createPlaylist() {
-    songs.forEach((song, index) => {
-        const li = document.createElement('li');
-        li.textContent = song.split('/').pop().replace('.mp3', '');
-        li.addEventListener('click', () => {
-            currentSong = index;
-            loadSong(currentSong);
-            playSong();
-            updatePlaylist();
-        });
-        playlistEl.appendChild(li);
-    });
-}
-
-function updatePlaylist() {
-    const playlistItems = playlistEl.querySelectorAll('li');
-    playlistItems.forEach((item, index) => {
-        if (index === currentSong) {
-            item.classList.add('active');
-        } else {
-            item.classList.remove('active');
-        }
-    });
-}
-
-// Event Listeners
-playBtn.addEventListener('click', () => {
-    const isPlaying = audio.paused;
-    if (isPlaying) {
-        playSong();
-        playBtn.textContent = 'Pause';
-    } else {
-        pauseSong();
-        playBtn.textContent = 'Play';
-    }
+audio.addEventListener('loadedmetadata',()=> totalTimeEl.textContent=format(audio.duration));
+audio.addEventListener('timeupdate',()=>{ 
+progress.style.width=(audio.currentTime/audio.duration)*100+'%'; 
+currentTimeEl.textContent=format(audio.currentTime); 
 });
 
-prevBtn.addEventListener('click', prevSong);
-nextBtn.addEventListener('click', nextSong);
-audio.addEventListener('timeupdate', updateProgressBar);
-progressBar.addEventListener('input', setProgress);
-volumeControl.addEventListener('input', setVolume);
-audio.addEventListener('ended', nextSong);
+progressBar.onclick=(e)=>{
+let pct = e.offsetX / progressBar.offsetWidth;
+audio.currentTime = pct * audio.duration;
+};
 
-// Initial Load
-loadSong(currentSong);
-createPlaylist();
-updatePlaylist();
+volumeEl.oninput=()=> audio.volume=volumeEl.value;
+muteBtn.onclick=()=>{ audio.volume=audio.volume>0?0:0.8; volumeEl.value=audio.volume; };
+
+audio.addEventListener('ended',()=>{ 
+if(autoplayToggle.checked){ nextBtn.click(); } 
+else pauseAudio(); 
+});
+
+function format(sec){
+sec=Math.floor(sec);
+return `${Math.floor(sec/60)}:${String(sec%60).padStart(2,'0')}`;
+}
+
+buildPlaylist(); 
+loadTrack(0);
+
+});
